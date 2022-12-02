@@ -13,6 +13,9 @@ include(cmake/ccache.cmake)
 find_package(fmt REQUIRED)
 find_package(nlohmann_json REQUIRED)
 
+add_executable(gatorfy src/main.cpp)
+target_link_libraries(gatorfy fmt::fmt nlohmann_json::nlohmann_json)
+
 option(BUILD_TESTING "Build the tests" ON)
 if(BUILD_TESTING)
     enable_testing()
