@@ -1,0 +1,21 @@
+include_guard()
+
+function(setup_ccache)
+    find_program(CCACHE_PATH ccache DOC "Path to ccache executable" )
+    if (CCACHE_PATH)
+        message(STATUS "Found ccache ${CCACHE_PATH}")
+        foreach(lang C CXX CUDA)
+            set(CMAKE_${lang}_COMPILER_LAUNCHER "${CCACHE_PATH}" PARENT_SCOPE)
+        endforeach()
+    else()
+        message(WARNING "Could not find ccache")
+        set(USE_CCACHE FALSE)
+    endif()
+endfunction()
+
+set(USE_CCACHE YES CACHE BOOL "Use ccache")
+if (USE_CCACHE)
+    setup_ccache()
+endif()
+
+message(STATUS "USE_CCACHE: \"${USE_CCACHE}\"")
